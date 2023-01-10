@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!--↓ 원하는 SQL 쿼리구문을 작성하는 파일 mapper -->  
+<!-- namespace : 각각의 xml 파일안에 있는 mapper 식별자
+	>>>>>>>>>> 대부분 해당하는 xml파일을 사용하게 될 DAO 이름을 명시
+	>>>>>>>>>> 중복되어서는 안된다.
+ -->
+<mapper namespace="com.smhrd.database.MemberDAO">   <!--Membermapper 의 namespace  -->
+  
+  <!-- id  : 각각의 쿼리문을 식별할 수 있는 변수값 (키값)
+  		parameterType : 쿼리문을 실행할 때 받아올 매개변수를 지정
+  		>>>>>>>>>>> 클래스 명을 지정 시 반드시 *패키지 명칭까지 붙여줄 것
+  -->
+  <insert id="join" parameterType="com.smhrd.dto.MemberDTO"> <!-- "가져올 필드 이름" -->
+  	insert into member values(#{name},#{age},#{id},#{pw}) <!-- ; 쓰지않음, {공백X} --> 
+  </insert>
+  
+  <!-- resultType : select 구문을 실행한 후에 어떤 자료형으로 return 할건지 지정 -->
+  <select id="login" 
+  		  parameterType="MemberDTO"
+  		  resultType="MemberDTO">       <!-- mybatis config 에 별명 설정했으므로 짧게 -->
+  	select *        <!-- #{id} : getId 라는 메소드를 쓸꺼야 -->
+  	from member where id = #{id} and pw = #{pw}
+  	<!-- Mapper파일에서 #{}는 parameter로 받아논 데이터의 getter메소드를 사용하겠다라른 의미 -->
+  	
+  </select>  
+ 
+ 
+  
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- ↑DOCTYPE  :  사용자 정의 태그를 사용할 건지 스키마 결정
+	 dtd       : document type definition 해당 문서 타입 정의(dtd식별자) 
+	-->
+<!-- 데이터베이스 동적로딩, 서로 다른 파일 연결 정보를 작성하는 구간-->
+<configuration>
+
+<typeAliases>
+<!-- MemberMapper 파일에서 사용할 type들의 별병을 지정해주는 공간 -->
+	<typeAlias type="com.smhrd.dto.MemberDTO" alias="MemberDTO"/>
+	
+</typeAliases>
+
+<!--↓↓ environments : 데이터베이스들을 기술 하는 공간  -->
+ <environments default="development">
+<!-- environment  어떤 데이터베이스를 사용할 건지 / 내용 기술하는 공간
+     ↓↓     :     데이터베이스 한 개를 의미하는 단위 --> 
+   <environment id="development">
+<!-- jdbc연결과 관련된 transactionmanager 
+		type 2가지
+		1) JDBD(commit, rollback을 Mybatis 자체적으로 관리)
+		2) MANAGED(Server가 관리(tomcat server)
+		↓↓			-->    
+      <transactionManager type="JDBC"/>
+<!--↓↓ 우리가 앞으로 수정할 공간 : dataSource -->       
+      <dataSource type="POOLED">
+	<!--※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+		1) UNPOOLED : 요청할 때마다 커넥션 객체를 생성
+		2) POOLED   : 미리 커넥션 객체를 생성하고 필요할 때 반환해주는 방식 데이터베이스커넥션풀
+		">>데이터베이스 커넥션 풀" -->
+        <property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@gjaischool-b.ddns.net:1525:xe"/>
+        <property name="username" value="cgi_5_0117_4"/>
+        <property name="password" value="smhrd4"/>
+      </dataSource>
+      
+    </environment>
+    
+  </environments>
+  
+  <!-- 연결하고 싶은 파일의 명칭 -->
+  <!--  mapper 파일이 생길 때마다 반드시 연결할 수 있도록 기술 해줄것! -->
+  <mappers>
+    <mapper resource="com/smhrd/database/MemberMapper.xml"/>
+  </mappers>
+  
+  
+  
+  
+  
+</configuration>
